@@ -2,7 +2,7 @@
  * for these tests to pass. */
 
 var mysql = require('mysql');
-var request = require("request"); // You might need to npm install the request module!
+var request = require("request");
 var expect = require('../../node_modules/chai/chai').expect;
 
 describe("Persistent Node Chat Server", function() {
@@ -14,14 +14,15 @@ describe("Persistent Node Chat Server", function() {
       password: "",
       database: "chat"
     });
+
     dbConnection.connect();
 
-       var tablename = ""; // TODO: fill this out
-
+    var tablename = 'messages';
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
     dbConnection.query("truncate " + tablename, done);
-  });
+    done();
+    });
 
   afterEach(function() {
     dbConnection.end();
@@ -38,7 +39,7 @@ describe("Persistent Node Chat Server", function() {
               uri: "http://127.0.0.1:3000/classes/messages",
               json: {
                 username: "Valjean",
-                message: "In mercy's name, three days is all I need.",
+                text: "In mercy's name, three days is all I need.",
                 roomname: "Hello"
               }
       }, function () {
@@ -47,15 +48,16 @@ describe("Persistent Node Chat Server", function() {
 
         // TODO: You might have to change this test to get all the data from
         // your message table, since this is schema-dependent.
-        var queryString = "SELECT * FROM messages";
-        var queryArgs = [];
+        var queryString = "SELECT * FROM ?";
+        var queryArgs = ['messages'];
 
         dbConnection.query(queryString, queryArgs, function(err, results) {
+          console.log('results is: ' + results);
           // Should have one result:
           expect(results.length).to.equal(1);
 
           // TODO: If you don't have a column named text, change this test.
-          expect(results[0].text).to.equal("In mercy's name, three days is all I need.");
+          expect(results[0].messageText).to.equal("In mercy's name, three days is all I need.");
 
           done();
         });
@@ -65,8 +67,14 @@ describe("Persistent Node Chat Server", function() {
 
   it("Should output all messages from the DB", function(done) {
     // Let's insert a message into the db
-       var queryString = "";
-       var queryArgs = [];
+       var queryString = "SELECT * FROM messages";
+       var queryFn = function(err, result){
+          if(error){
+            throw error;
+          }
+          // result();
+       };
+       var queryArgs = [queryFn];
     // TODO - The exact query string and query args to use
     // here depend on the schema you design, so I'll leave
     // them up to you. */

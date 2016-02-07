@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- dependencies -->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <!-- your scripts -->
+    <script src="env/config.js"></script>
+    <script src="scripts/app.js"></script>
+    <script>
+      $(document).on('ready', function() { app.init(); });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+      <h1 class="title">chatterbox</h1>
+      <!-- Your HTML goes here! -->
+      
+      <div class="username">
+        <h6 class="sign-in-status">You are not signed in.</h6>
+        <div id='username-submission'>
+          <form method='post' action='' >
+            <p>
+            Name: <input type='text' name='Name' id="username-field"/>
+            </p>
+            <p>
+            <input type='submit' name='Submit' value='Submit' />
+            </p>
+          </form>
+        </div>
+      </div>
+      
+      <div class="message-entry">
+        <div id="message-submission">
+          <form method='post' action='' >
+            <p>
+            Message: <input type='text' name='Name' id="message-field"/>
+            </p>
+            <p>
+            <input type='submit' name='Submit' value='Submit' />
+            </p>
+          </form>
+        </div>
+      </div>    
+
+      <div class="room-entry">
+        <div id='room-submission'>
+          <form method='post' action='' >
+            <p>
+            New Room: <input type='text' name='Name' id="room-entry-field"/>
+            </p>
+            <p>
+            <input type='submit' name='Submit' value='Submit' />
+            </p>
+          </form>
+        </div>
+      </div>       
+        
+        
+      <div>
+        <select id="rooms-dropdown">
+          <option value="">lobby</option>
+        </select>
+      </div>
+      
+      <div id="chats"></div>
+      
+
+  </body>
+</html>
